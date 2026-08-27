@@ -1,0 +1,4 @@
+symbol,category,n_prices,n_returns,start,end,missing_vs_spy,mean_daily_return_pct,std_daily_return_pct,annualized_return_proxy_pct,annualized_volatility_pct,positive_return_days_pct,largest_abs_daily_return_pct,largest_abs_return_date,n_abs_return_gt_20pct,min_close,max_close,lowest_low,highest_high,close_change_pct
+SLV,commodities,1630,1629,2020-01-02,2026-06-29,0,0.101615,2.471678,25.607032,39.236673,50.705955,-27.604656,2026-01-30,2,11.310000,106.710000,10.870000,110.250000,213.844326
+UNG,commodities,1630,1629,2020-01-02,2026-06-29,0,-0.030933,3.902176,-7.795060,61.945130,49.416820,-25.677267,2026-02-02,1,10.140000,135.600000,9.955000,138.000000,-82.618613
+USO,commodities,1630,1629,2020-01-02,2026-06-29,0,0.041595,2.762239,10.481893,43.849179,51.688152,-27.393617,2020-04-21,2,17.280000,152.300000,15.760000,154.040000,4.254695

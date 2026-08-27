@@ -1,0 +1,19 @@
+ETF price panel exploration
+
+Method: simple close-to-close daily returns, r_t = close_t / close_(t-1) - 1.
+Price range: observed lowest low through highest high in each file.
+Annualized values use 252 trading days and are descriptive only.
+
+Highest average daily return: SLV (0.102%).
+Lowest average daily return: UNG (-0.031%).
+Most volatile daily returns: UNG (3.902% standard deviation).
+Least volatile daily returns: SHY (0.133% standard deviation).
+Largest close-to-close period gain: XLK (297.2%).
+Largest close-to-close period loss: UNG (-82.6%).
+
+Data checks: no blank fields, duplicate dates, invalid OHLC ordering, or negative volumes found.
+Missing dates relative to SPY: QQQ (4), IEF (8), SHY (5), TLT (7)
+
+Single-day moves above 20% after the documented adjustments: SLV (-27.6% on 2026-01-30), USO (-27.4% on 2020-04-21), UNG (-25.7% on 2026-02-02)
+
+Caveat: the adjustments address identified splits and the supplied USO/UNG replacements. They do not create total-return series because distributions are excluded.
