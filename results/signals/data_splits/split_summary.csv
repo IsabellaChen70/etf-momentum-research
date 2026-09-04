@@ -1,0 +1,4 @@
+sample,first_trading_date,last_trading_date,trading_days,etfs,price_observations
+training,2020-01-02,2024-05-31,1111,37,41107
+validation,2024-06-03,2025-05-30,249,37,9213
+test,2025-06-02,2026-06-29,270,37,9990

@@ -1,0 +1,9 @@
+check,status,active_dates,max_long_error,max_short_error
+momra_baseline_target_exposure,pass,1610,6.661338147750939e-16,2.220446049250313e-16
+selected_sma_macd_target_exposure,pass,1626,8.881784197001252e-16,2.220446049250313e-16
+selected_smoothed_macd_target_exposure,pass,1603,6.661338147750939e-16,2.220446049250313e-16
+selected_ewma_macd_target_exposure,pass,1622,6.661338147750939e-16,2.220446049250313e-16
+split_adjusted_price_returns,pass,1630,0.27604655528440036,
+finite_results_and_sample_boundaries,pass,1630,0.0,0.0
+one_day_lag_and_five_return_day_holding,pass,5,0.0,0.0
+clean_forward_return_boundaries,pass,1608,0.0,0.0

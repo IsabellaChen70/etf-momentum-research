@@ -6,3 +6,10 @@ __pycache__/
 
 data/*.zip
 data/adjusted/*.csv
+
+# Reproducible intermediate panels
+results/signals/data/
+results/signals/data_splits/*_prices.csv
+results/signals/*/*_panel.csv
+results/macd/tables/final_portfolio_values.csv
+results/macd/tables/macd_quintile_panel.csv
