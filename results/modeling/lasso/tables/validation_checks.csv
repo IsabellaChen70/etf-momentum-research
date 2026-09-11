@@ -1,0 +1,11 @@
+check,status,detail
+rolling_bounds_use_strictly_prior_raw_values,pass,2023-05-26
+chronological_train_validation_test_order,pass,66 monthly folds
+five_day_labels_purged_at_fold_boundaries,pass,label end <= fold end
+predictions_are_monthly_out_of_sample,pass,"50,949 ETF-date predictions"
+prediction_metrics_use_clean_outer_samples,pass,boundary-crossing labels excluded
+complete_five_day_holds_at_sample_boundaries,pass,last 6 signal dates are flat
+one_day_lag_and_five_return_day_holding,pass,P&L dates t+2 through t+6
+daily_target_exposure_150_50,pass,563 active dates
+split_adjusted_price_returns,pass,max abs return 0.276047
+finite_independent_outer_backtests,pass,each sample starts at 1

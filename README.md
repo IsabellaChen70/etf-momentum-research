@@ -1,6 +1,6 @@
 # ETF Momentum Research
 
-This repository documents a personal research project on momentum signals across 37 exchange-traded funds. The current release covers price-panel validation, a multi-asset cohort backtester, grouped signal diagnostics, and MACD parameter comparisons. The sample runs from January 2020 through June 2026.
+This repository documents a personal research project on momentum signals across 37 exchange-traded funds. The current release covers price-panel validation, a multi-asset cohort backtester, grouped signal diagnostics, MACD parameter comparisons, and walk-forward model evaluation. The sample runs from January 2020 through June 2026.
 
 ## Research design
 
@@ -51,6 +51,27 @@ The unsmoothed SMA model beat every smoothed and EWMA candidate on validation. T
 
 ![MACD strategy comparison](results/macd/plots/final_strategy_comparison.png)
 
+## Walk-forward modeling
+
+Fourteen momentum-derived features feed a monthly walk-forward framework. Each fold uses three calendar months for fitting, one month for hyperparameter validation, and the next month for prediction. Rolling winsorization and scaling use only observations available before each signal date. The prediction target is the five-day return earned after the one-day execution lag.
+
+The model comparison includes an equal-weight signal composite, regularized linear regressions, and tree-based regressors. Overall validation MSE selects the model family, with validation MAE as the tie-breaker.
+
+| Validation rank | Model | MSE | MAE | Return correlation |
+| ---: | --- | ---: | ---: | ---: |
+| 1 | LASSO | 0.000935 | 0.020842 | -0.0210 |
+| 2 | Elastic Net | 0.000935 | 0.020849 | -0.0225 |
+| 3 | Equal Weight | 0.000937 | 0.020983 | -0.0033 |
+| 4 | Ridge | 0.000946 | 0.021190 | -0.0017 |
+| 5 | Gradient Boosting | 0.000949 | 0.021204 | 0.0120 |
+| 6 | Random Forest | 0.000951 | 0.021180 | 0.0157 |
+
+LASSO had the lowest validation MSE, though its advantage over Elastic Net and the equal-weight composite was small. Its validation return correlation was negative. This weak cross-sectional forecasting evidence limits how much weight should be placed on the backtested portfolio result. The selected LASSO portfolio returned 15.1% annualized during validation with 10.5% annualized volatility and a -9.1% maximum drawdown, before trading and financing costs.
+
+![Validation prediction errors](results/modeling/comparison/plots/validation_mse_mae_comparison.png)
+
+The historical test results are retained for descriptive comparison because that period has already been inspected. They were not used in the validation ranking shown above and should not be treated as a fresh holdout.
+
 ## Reproduction
 
 Create an environment with Python 3.11 or later and install the dependencies:
@@ -66,6 +87,8 @@ python3 src/explore_etf_data.py
 python3 src/momentum_backtest.py
 python3 -m src.signal_analysis
 python3 -m src.macd_research
+python3 -m src.rolling_lasso
+python3 -m src.model_comparison
 ```
 
 Derived tables and figures are written under `results/`.
@@ -78,4 +101,6 @@ Derived tables and figures are written under `results/`.
 | `src/momentum_backtest.py` | Signal construction and cohort backtester |
 | `src/signal_analysis/` | MOM, MOMRA, percentile, and cross-sectional diagnostics |
 | `src/macd_research.py` | SMA grid, smoothing comparison, and EWMA comparison |
+| `src/rolling_lasso.py` | Forward-safe feature processing and rolling LASSO evaluation |
+| `src/model_comparison.py` | Equal-weight, regression, and tree-model comparison |
 | `results/` | Compact research tables and figures |

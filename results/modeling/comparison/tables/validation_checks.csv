@@ -1,0 +1,11 @@
+check,status,detail
+identical_prediction_universe,pass,"50,949 rows/model"
+same_dates_symbols_and_targets,pass,all six models
+chronological_monthly_folds,pass,3m/1m/1m
+fold_hyperparameters_minimize_validation_mse,pass,396 model-folds
+winner_uses_overall_validation_only,pass,lasso
+overall_validation_labels_end_before_test,pass,boundary labels excluded
+one_day_lag_five_day_target,pass,price[t+6]/price[t+1]-1
+all_models_exact_150_50_and_complete_holds,pass,six models
+independent_portfolio_recalculation,pass,18 model-samples
+finite_predictions,pass,"304,362 rows"

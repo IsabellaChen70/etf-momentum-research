@@ -13,3 +13,16 @@ results/signals/data_splits/*_prices.csv
 results/signals/*/*_panel.csv
 results/macd/tables/final_portfolio_values.csv
 results/macd/tables/macd_quintile_panel.csv
+
+# Reproducible modeling intermediates
+results/modeling/lasso/tables/daily_target_weights.csv
+results/modeling/lasso/tables/lasso_alpha_validation_grid.csv
+results/modeling/lasso/tables/lasso_coefficients.csv
+results/modeling/lasso/tables/portfolio_values.csv
+results/modeling/lasso/tables/processed_signal_sample.csv
+results/modeling/lasso/tables/walk_forward_predictions.csv
+results/modeling/comparison/tables/active_daily_target_weights.csv
+results/modeling/comparison/tables/monthly_feature_strength.csv
+results/modeling/comparison/tables/monthly_hyperparameter_grid.csv
+results/modeling/comparison/tables/monthly_model_folds.csv
+results/modeling/comparison/tables/walk_forward_model_predictions.csv

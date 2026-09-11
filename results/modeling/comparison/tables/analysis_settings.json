@@ -1,0 +1,42 @@
+{
+  "models": [
+    "equal_weight",
+    "lasso",
+    "ridge",
+    "elastic_net",
+    "random_forest",
+    "gradient_boosting"
+  ],
+  "model_labels": {
+    "equal_weight": "Equal Weight",
+    "lasso": "LASSO",
+    "ridge": "Ridge",
+    "elastic_net": "Elastic Net",
+    "random_forest": "Random Forest",
+    "gradient_boosting": "Gradient Boosting"
+  },
+  "feature_names": [
+    "mom_3",
+    "mom_5",
+    "mom_10",
+    "mom_20",
+    "momra_20",
+    "csmom_20",
+    "sma_macd_1_5",
+    "sma_macd_1_10",
+    "sma_macd_5_10",
+    "sma_macd_5_20",
+    "sma_macd_10_20",
+    "sma_macd_10_60",
+    "sma_macd_20_60",
+    "ewma_macd_0500_0333"
+  ],
+  "selection_metric": "overall validation MSE",
+  "tie_breaker": "overall validation MAE",
+  "random_state": 20260826,
+  "train_months": 3,
+  "validation_months": 1,
+  "prediction_months": 1,
+  "holding_days": 5,
+  "execution_lag_days": 1
+}
