@@ -15,6 +15,10 @@ from etf_research.portfolio import (
     optimize_market_neutral_weights,
     purge_incomplete_holds,
 )
+from etf_research.risk_overlay import (
+    apply_volatility_regime_overlay,
+    realized_volatility_regime,
+)
 
 
 def test_execution_target_begins_after_one_day_and_holds_five_returns() -> None:
@@ -144,3 +148,65 @@ def test_walk_forward_labels_are_purged_at_month_boundaries() -> None:
     assert train["label_end_date"].max() <= pd.Timestamp("2024-01-31")
     assert validation["label_end_date"].max() <= pd.Timestamp("2024-02-29")
     assert prediction["date"].min() >= pd.Timestamp("2024-03-01")
+
+
+def test_volatility_regime_threshold_does_not_use_future_prices() -> None:
+    dates = pd.bdate_range("2022-01-03", periods=420)
+    rng = np.random.default_rng(7)
+    returns = pd.DataFrame(
+        rng.normal(0.0002, 0.01, size=(len(dates), 6)),
+        index=dates,
+        columns=list("ABCDEF"),
+    )
+    prices = 100.0 * (1.0 + returns).cumprod()
+    original = realized_volatility_regime(
+        prices,
+        regime_history=126,
+        regime_min_periods=63,
+    )
+    changed = prices.copy()
+    changed.iloc[-1] *= 3.0
+    revised = realized_volatility_regime(
+        changed,
+        regime_history=126,
+        regime_min_periods=63,
+    )
+    pd.testing.assert_series_equal(
+        original["high_volatility_threshold"],
+        revised["high_volatility_threshold"],
+    )
+    pd.testing.assert_frame_equal(original.iloc[:-1], revised.iloc[:-1])
+
+
+def test_risk_overlay_preserves_neutrality_and_only_reduces_exposure() -> None:
+    dates = pd.bdate_range("2022-01-03", periods=420)
+    symbols = list("ABCDEFGH")
+    rng = np.random.default_rng(11)
+    returns = pd.DataFrame(
+        rng.normal(0.0001, 0.012, size=(len(dates), len(symbols))),
+        index=dates,
+        columns=symbols,
+    )
+    prices = 100.0 * (1.0 + returns).cumprod()
+    targets = pd.DataFrame(0.0, index=dates, columns=symbols)
+    signal_dates = dates[-20:]
+    targets.loc[signal_dates, symbols[:4]] = 0.25
+    targets.loc[signal_dates, symbols[4:]] = -0.25
+
+    managed, diagnostics = apply_volatility_regime_overlay(
+        prices,
+        targets,
+        signal_dates,
+        target_annualized_volatility=0.08,
+        gross_limit=2.0,
+        regime_history=126,
+        regime_min_periods=63,
+    )
+    active = managed.loc[signal_dates]
+    assert np.allclose(active.sum(axis=1), 0.0, atol=1e-10)
+    assert (active.abs().sum(axis=1) <= 2.0 + 1e-10).all()
+    assert diagnostics["final_scale"].between(0.0, 1.0).all()
+    assert (
+        diagnostics["final_predicted_annualized_volatility"]
+        <= diagnostics["base_predicted_annualized_volatility"] + 1e-12
+    ).all()

@@ -37,3 +37,4 @@ reports/tables/historical_test_inner_parameter_search.csv
 reports/tables/historical_test_target_weights.csv
 reports/tables/historical_test_walk_forward_folds.csv
 reports/tables/optimizer_diagnostics.csv
+reports/tables/validation_risk_overlay_diagnostics.csv

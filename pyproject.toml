@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cross-asset-etf-research"
 version = "0.1.0"
-description = "Forward-safe cross-sectional ETF signal research and portfolio construction"
+description = "CTA-inspired cross-asset ETF signal research and portfolio construction"
 requires-python = ">=3.11"
 dependencies = [
   "matplotlib>=3.8,<4",

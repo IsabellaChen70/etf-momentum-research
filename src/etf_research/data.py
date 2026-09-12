@@ -19,6 +19,18 @@ KNOWN_SPLIT_ADJUSTMENTS: dict[str, dict[str, float]] = {
 }
 
 
+def load_universe_manifest(project_root: str | Path) -> pd.DataFrame:
+    """Load the source universe metadata without extracting the archive."""
+    archive_path = Path(project_root) / "data" / "CTA_data.zip"
+    with zipfile.ZipFile(archive_path) as archive:
+        manifest = pd.read_csv(archive.open("_manifest.csv"))
+    required = {"symbol", "category", "rows", "start", "end"}
+    missing = required - set(manifest.columns)
+    if missing:
+        raise ValueError(f"Universe manifest is missing columns: {sorted(missing)}")
+    return manifest.sort_values(["category", "symbol"]).reset_index(drop=True)
+
+
 def source_manifest(project_root: str | Path) -> pd.DataFrame:
     """Record the exact local source files used by a research run."""
     root = Path(project_root)
@@ -67,8 +79,8 @@ def load_adjusted_prices(project_root: str | Path) -> pd.DataFrame:
     root = Path(project_root)
     zip_path = root / "data" / "CTA_data.zip"
     override_dir = root / "data" / "adjusted"
+    manifest = load_universe_manifest(root)
     with zipfile.ZipFile(zip_path) as archive:
-        manifest = pd.read_csv(archive.open("_manifest.csv"))
         series = [
             _read_close_csv(archive.open(f"{symbol}_ohlcv_1d.csv"), symbol)
             for symbol in manifest["symbol"]

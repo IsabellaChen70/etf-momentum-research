@@ -1,0 +1,5 @@
+check,status,detail
+overlay_uses_validation_dates_only,pass,2025-05-30
+overlay_preserves_market_neutrality,pass,max abs net 8.33e-17
+overlay_respects_gross_limit,pass,max gross 2.000
+overlay_does_not_scale_exposure_up,pass,max scale 1.000

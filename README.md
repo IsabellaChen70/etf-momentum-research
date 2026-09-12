@@ -1,6 +1,8 @@
-# ETF Momentum Research
+# CTA-Inspired Cross-Asset ETF Research
 
-This repository documents a personal research project on momentum signals across 37 exchange-traded funds. It progresses from signal diagnostics and cohort backtesting to walk-forward modeling, constrained portfolio construction, and a cost-aware deployment decision. The sample runs from January 2020 through June 2026.
+[![tests](https://github.com/IsabellaChen70/etf-momentum-research/actions/workflows/tests.yml/badge.svg)](https://github.com/IsabellaChen70/etf-momentum-research/actions/workflows/tests.yml)
+
+This repository documents a personal research project on systematic long-short signals across 37 exchange-traded funds. It progresses from signal diagnostics and cohort backtesting to walk-forward modeling, constrained portfolio construction, and a cost-aware deployment decision. The sample runs from January 2020 through June 2026.
 
 ## Research design
 
@@ -15,7 +17,7 @@ The exploratory stages exclude implementation costs. The final end-to-end pipeli
 
 ## Data treatment
 
-The source panel contains daily OHLCV observations. Supplied adjusted files replace USO and UNG. Documented 2-for-1 splits in XLB, XLE, XLK, XLU, and XLY are corrected in the loader. Returns remain price returns because distributions are outside the dataset.
+The source panel contains daily OHLCV observations across six market categories. These categories cover broad US equities, US sectors, international equities, fixed income, commodities, and alternatives. Supplied adjusted files replace USO and UNG. Documented 2-for-1 splits in XLB, XLE, XLK, XLU, and XLY are corrected in the loader. Returns remain price returns because distributions are outside the dataset.
 
 The input files are excluded from GitHub because their redistribution terms were not established. See [data/README.md](data/README.md) for the expected local paths.
 
@@ -106,6 +108,16 @@ This result changes the project’s conclusion. The earlier positive backtests w
 
 ![Historical out-of-sample evaluation](reports/figures/historical_out_of_sample_evaluation.png)
 
+## Validation-only risk overlay
+
+A later risk-control extension adds a 10% ex-ante volatility target and a realized-volatility regime. The regime threshold uses only prior observations from a rolling 252-day history. Exposure is cut by half above the prior 80th-percentile threshold and is never scaled above the base strategy.
+
+The extension is evaluated on validation only because the historical test had already been inspected. It reduced annualized volatility from 15.7% to 8.4% and reduced maximum drawdown magnitude from 7.5% to 6.7%. Annualized return fell from 10.6% to 2.2%, so this is evidence of risk reduction rather than improved forecasting or risk-adjusted performance.
+
+![Validation risk overlay](reports/figures/validation_risk_overlay.png)
+
+Exact counts, constraints, and scope boundaries are recorded in [PROJECT_METRICS.md](PROJECT_METRICS.md).
+
 ## Reproduction
 
 Create an environment with Python 3.11 or later and install the dependencies:
@@ -125,6 +137,7 @@ python3 -m src.rolling_lasso
 python3 -m src.model_comparison
 python3 -m src.portfolio_optimization
 python3 scripts/run_research_pipeline.py
+python3 scripts/run_risk_overlay_analysis.py
 python3 -m pytest
 ```
 
@@ -142,8 +155,11 @@ Derived artifacts are written under `results/` and `reports/`.
 | `src/model_comparison.py` | Equal-weight, regression, and tree-model comparison |
 | `src/portfolio_optimization.py` | Validation-selected constrained mean-variance optimization |
 | `src/etf_research/` | End-to-end feature, model, portfolio, and reporting package |
+| `src/etf_research/risk_overlay.py` | Causal volatility target and realized-volatility regime controls |
 | `configs/research_pipeline.json` | Reproducible final-pipeline configuration |
+| `scripts/run_risk_overlay_analysis.py` | Validation-only risk-overlay analysis and metric export |
 | `tests/` | Look-ahead prevention, execution, constraint, and cost tests |
 | `EVALUATION_POLICY.md` | Holdout and reporting policy |
+| `PROJECT_METRICS.md` | Verified counts, results, and scope boundaries |
 | `results/` | Compact research tables and figures |
 | `reports/` | Final validation and historical evaluation artifacts |

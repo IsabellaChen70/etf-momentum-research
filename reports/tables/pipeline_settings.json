@@ -26,6 +26,15 @@
   "turnover_penalty": 0.0025,
   "transaction_cost_bps": 5.0,
   "annual_short_borrow_bps": 25.0,
+  "risk_overlay": {
+    "target_annualized_volatility": 0.1,
+    "maximum_scale": 1.0,
+    "high_volatility_scale": 0.5,
+    "regime_volatility_lookback": 20,
+    "regime_history": 252,
+    "regime_min_periods": 126,
+    "high_volatility_quantile": 0.8
+  },
   "selected_model": "elastic_net",
   "selected_risk_aversion": 1.0,
   "selected_strategy": "momra_reversal_rank",

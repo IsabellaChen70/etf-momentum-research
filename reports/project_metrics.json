@@ -1,0 +1,35 @@
+{
+  "instrument_type": "exchange-traded funds",
+  "etf_count": 37,
+  "market_category_count": 6,
+  "market_categories": [
+    "alternatives",
+    "commodities",
+    "fixed_income",
+    "international_equity",
+    "us_equity_broad",
+    "us_sectors"
+  ],
+  "feature_count": 14,
+  "model_count": 4,
+  "validation_risk_overlay": {
+    "target_annualized_volatility": 0.1,
+    "base_annualized_volatility": 0.15663297091367792,
+    "managed_annualized_volatility": 0.08386991416887679,
+    "volatility_reduction": 0.4645449570442076,
+    "base_max_drawdown": -0.07542317487969141,
+    "managed_max_drawdown": -0.0665812024598409,
+    "drawdown_reduction": 0.11723150654894166
+  },
+  "portfolio_constraints": {
+    "target_net_exposure": 0.0,
+    "gross_exposure_limit": 2.0,
+    "single_etf_absolute_limit": 0.15
+  },
+  "historical_test_status": "already inspected; no new overlay performance reported",
+  "unsupported_claims": [
+    "futures contracts",
+    "VIX-implied volatility",
+    "positive historical out-of-sample performance"
+  ]
+}
