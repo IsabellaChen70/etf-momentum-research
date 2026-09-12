@@ -1,0 +1,50 @@
+{
+  "validation_start": "2024-06-01",
+  "validation_end": "2025-05-31",
+  "historical_test_start": "2025-06-01",
+  "historical_test_end": null,
+  "models": [
+    "lasso",
+    "ridge",
+    "elastic_net",
+    "hist_gradient_boosting"
+  ],
+  "training_months": 12,
+  "inner_validation_months": 2,
+  "risk_aversion_grid": [
+    1.0,
+    3.0,
+    10.0,
+    30.0,
+    100.0,
+    300.0
+  ],
+  "covariance_lookback": 126,
+  "covariance_min_periods": 63,
+  "gross_limit": 2.0,
+  "position_limit": 0.15,
+  "turnover_penalty": 0.0025,
+  "transaction_cost_bps": 5.0,
+  "annual_short_borrow_bps": 25.0,
+  "selected_model": "elastic_net",
+  "selected_risk_aversion": 1.0,
+  "selected_strategy": "momra_reversal_rank",
+  "feature_names": [
+    "mom_3",
+    "mom_5",
+    "mom_10",
+    "mom_20",
+    "momra_20",
+    "csmom_20",
+    "sma_macd_1_5",
+    "sma_macd_1_10",
+    "sma_macd_5_10",
+    "sma_macd_5_20",
+    "sma_macd_10_20",
+    "sma_macd_10_60",
+    "sma_macd_20_60",
+    "ewma_macd_0500_0333"
+  ],
+  "historical_test_status": "previously inspected, not a fresh blind holdout",
+  "return_type": "split-adjusted price return, dividends not fully incorporated"
+}

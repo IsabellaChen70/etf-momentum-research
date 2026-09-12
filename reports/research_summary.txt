@@ -1,0 +1,23 @@
+CROSS-ASSET ETF RESEARCH: FINAL EVALUATION
+
+Selection
+- Best cross-sectional model on validation rank IC: Elastic Net.
+- Final validation-selected strategy: momra_reversal_rank.
+- Validation Sharpe after costs: 0.716.
+
+Historical out-of-sample evaluation
+- Ending value: 0.926.
+- Annualized return: -7.0%.
+- Annualized volatility: 17.4%.
+- Sharpe: -0.328.
+- Maximum drawdown: -20.1%.
+
+Research controls
+- Signals use cross-sectional relative-return targets.
+- Collapsed forecasts produce cash rather than forced risky exposure.
+- Results include 5 bps transaction costs and 25 bps annual short borrow cost.
+- Risk uses a trailing Ledoit-Wolf shrinkage covariance estimate.
+
+Limitations
+- The historical test period was inspected in earlier revisions and is not a fresh blind holdout.
+- The source data represent split-adjusted price returns rather than complete ETF total returns.

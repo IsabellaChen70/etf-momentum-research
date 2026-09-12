@@ -1,6 +1,6 @@
 # ETF Momentum Research
 
-This repository documents a personal research project on momentum signals across 37 exchange-traded funds. The current release covers price-panel validation, a multi-asset cohort backtester, grouped signal diagnostics, MACD parameter comparisons, and walk-forward model evaluation. The sample runs from January 2020 through June 2026.
+This repository documents a personal research project on momentum signals across 37 exchange-traded funds. It progresses from signal diagnostics and cohort backtesting to walk-forward modeling, constrained portfolio construction, and a cost-aware deployment decision. The sample runs from January 2020 through June 2026.
 
 ## Research design
 
@@ -9,9 +9,9 @@ This repository documents a personal research project on momentum signals across
 - A signal observed at close `t` enters at close `t+1`. Each position cohort earns the following five daily returns.
 - Portfolio rules target 150% long exposure and 50% short exposure when both sides are available.
 
-The chronological samples are training through May 2024, validation from June 2024 through May 2025, and a historical test beginning in June 2025. Parameter choices use validation Sharpe. Historical test statistics are reported after selection. Since these results have now been inspected, this period should not be described as a fresh holdout in later research.
+The chronological samples are training through May 2024, validation from June 2024 through May 2025, and a historical test beginning in June 2025. Model and parameter choices use only training or validation metrics defined in each stage. Historical test statistics are reported after selection. Since these results have now been inspected, this period should not be described as a fresh holdout in later research.
 
-Transaction costs, financing costs, taxes, and distributions are excluded from the stages published here. The estimates describe this dataset and implementation.
+The exploratory stages exclude implementation costs. The final end-to-end pipeline applies 5 basis points of transaction cost and 25 basis points of annual short-borrow cost. Other financing costs, taxes, and distributions remain excluded. The estimates describe this dataset and implementation.
 
 ## Data treatment
 
@@ -87,6 +87,25 @@ LASSO produced identical cross-sectional forecasts on 164 of 270 historical test
 
 ![Validation risk-aversion selection](results/optimization/plots/validation_risk_aversion_selection.png)
 
+## Final cost-aware evaluation
+
+The final pipeline tightens the earlier experiments in several ways. Models predict execution-aligned cross-sectional relative returns using 12-month training windows and two-month inner validation windows. Portfolio construction is market neutral, allows cash when forecasts collapse, and limits each ETF to 15% absolute weight. Ledoit-Wolf covariance shrinkage replaces the earlier fixed shrinkage estimate. Backtests include transaction and short-borrow costs.
+
+Elastic Net had the highest validation rank IC, though its mean daily rank IC was still -0.0069. Its optimized portfolio lost 16.1% annualized during validation after modeled costs. A deployment comparison therefore selected the MOMRA-reversal rank portfolio, which had a validation Sharpe of 0.716.
+
+The frozen MOMRA-reversal portfolio did not generalize to the already-inspected historical test:
+
+| Historical test result | Value |
+| --- | ---: |
+| Annualized return | -7.0% |
+| Annualized volatility | 17.4% |
+| Sharpe | -0.328 |
+| Maximum drawdown | -20.1% |
+
+This result changes the project’s conclusion. The earlier positive backtests were sensitive to portfolio construction and evaluation choices. With cross-sectional targets and market-neutral constraints, the tested signals did not provide stable historical out-of-sample performance after modeled costs. The research infrastructure remains useful, while the strategy evidence is insufficient for deployment.
+
+![Historical out-of-sample evaluation](reports/figures/historical_out_of_sample_evaluation.png)
+
 ## Reproduction
 
 Create an environment with Python 3.11 or later and install the dependencies:
@@ -105,9 +124,11 @@ python3 -m src.macd_research
 python3 -m src.rolling_lasso
 python3 -m src.model_comparison
 python3 -m src.portfolio_optimization
+python3 scripts/run_research_pipeline.py
+python3 -m pytest
 ```
 
-Derived tables and figures are written under `results/`.
+Derived artifacts are written under `results/` and `reports/`.
 
 ## Repository layout
 
@@ -120,4 +141,9 @@ Derived tables and figures are written under `results/`.
 | `src/rolling_lasso.py` | Forward-safe feature processing and rolling LASSO evaluation |
 | `src/model_comparison.py` | Equal-weight, regression, and tree-model comparison |
 | `src/portfolio_optimization.py` | Validation-selected constrained mean-variance optimization |
+| `src/etf_research/` | End-to-end feature, model, portfolio, and reporting package |
+| `configs/research_pipeline.json` | Reproducible final-pipeline configuration |
+| `tests/` | Look-ahead prevention, execution, constraint, and cost tests |
+| `EVALUATION_POLICY.md` | Holdout and reporting policy |
 | `results/` | Compact research tables and figures |
+| `reports/` | Final validation and historical evaluation artifacts |

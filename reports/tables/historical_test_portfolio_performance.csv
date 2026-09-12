@@ -1,0 +1,3 @@
+sample,strategy,start,end,trading_days,ending_value,annualized_return,annualized_volatility,sharpe,sortino,max_drawdown,calmar,average_gross_exposure,average_net_exposure,average_daily_turnover,total_transaction_cost,total_borrow_cost
+historical_test,momra_reversal_rank,2025-06-02,2026-06-29,270,0.9257147236604095,-0.06975849141231039,0.17404515885082608,-0.32775260949130025,-0.5386199138426107,-0.2008507337159956,-0.34731509375987346,1.9438564377692635,-4.606214890261637e-05,0.37662222265260004,0.05084328161601632,0.0026262985717799064
+historical_test,cash_no_deployment,2025-06-02,2026-06-29,270,1.0,0.0,0.0,,,0.0,,0.0,0.0,0.0,0.0,0.0

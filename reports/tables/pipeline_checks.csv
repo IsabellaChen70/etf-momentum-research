@@ -1,0 +1,8 @@
+check,status,detail
+model_family_frozen_before_historical_test,pass,elastic_net
+deployment_strategy_selected_on_validation,pass,momra_reversal_rank
+risk_aversion_selected_on_validation,pass,1
+validation_ranking_excludes_historical_test,pass,2025-05-30
+portfolio_constraints,pass,"zero net, bounded gross and ETF weights"
+finite_net_of_cost_backtests,pass,2 strategies
+adjusted_price_discontinuities,pass,max absolute daily return 0.276

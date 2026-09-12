@@ -31,3 +31,9 @@ results/modeling/comparison/tables/walk_forward_model_predictions.csv
 results/optimization/tables/historical_test_optimizer_diagnostics.csv
 results/optimization/tables/historical_test_portfolio_values.csv
 results/optimization/tables/historical_test_target_weights.csv
+
+# Reproducible final-pipeline intermediates
+reports/tables/historical_test_inner_parameter_search.csv
+reports/tables/historical_test_target_weights.csv
+reports/tables/historical_test_walk_forward_folds.csv
+reports/tables/optimizer_diagnostics.csv
