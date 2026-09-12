@@ -1,0 +1,6 @@
+check,status,detail
+risk_aversion_selected_on_validation_only,pass,300
+expected_return_model_selected_on_validation,pass,lasso
+target_constraints_and_complete_holds,pass,"100% net, gross no greater than 300%"
+finite_optimizer_outputs,pass,270 historical test dates
+independent_test_portfolio_recalculation,pass,optimized and baseline

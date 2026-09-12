@@ -26,3 +26,8 @@ results/modeling/comparison/tables/monthly_feature_strength.csv
 results/modeling/comparison/tables/monthly_hyperparameter_grid.csv
 results/modeling/comparison/tables/monthly_model_folds.csv
 results/modeling/comparison/tables/walk_forward_model_predictions.csv
+
+# Reproducible portfolio-optimization intermediates
+results/optimization/tables/historical_test_optimizer_diagnostics.csv
+results/optimization/tables/historical_test_portfolio_values.csv
+results/optimization/tables/historical_test_target_weights.csv

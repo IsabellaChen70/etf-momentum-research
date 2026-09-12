@@ -1,0 +1,25 @@
+{
+  "expected_return_model": "lasso",
+  "model_selection_source": "walk-forward outer validation MSE",
+  "risk_aversion_selection_metric": "validation Sharpe",
+  "risk_aversion_grid": [
+    0.1,
+    0.3,
+    1.0,
+    3.0,
+    10.0,
+    30.0,
+    100.0,
+    300.0,
+    1000.0
+  ],
+  "selected_risk_aversion": 300.0,
+  "covariance_lookback": 60,
+  "covariance_min_periods": 40,
+  "covariance_shrinkage": 0.1,
+  "net_exposure": 1.0,
+  "gross_limit": 3.0,
+  "holding_days": 5,
+  "execution_lag_days": 1,
+  "risk_free_rate": 0.0
+}

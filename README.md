@@ -72,6 +72,21 @@ LASSO had the lowest validation MSE, though its advantage over Elastic Net and t
 
 The historical test results are retained for descriptive comparison because that period has already been inspected. They were not used in the validation ranking shown above and should not be treated as a fresh holdout.
 
+## Portfolio optimization
+
+The validation-selected LASSO forecasts provide expected returns for a constrained mean-variance optimizer. Risk is estimated from a trailing 60-day covariance matrix with 10% diagonal shrinkage. Candidate portfolios maintain 100% net exposure, subject to a 300% gross-exposure limit.
+
+The risk-aversion parameter is selected by validation Sharpe. A value of 300 ranked first with a validation Sharpe of 0.773, narrowly ahead of 0.3 at 0.752. The selected portfolio had lower risk than the signal-proportional reference in the historical test, though its return and Sharpe were also lower.
+
+| Historical test strategy | Annualized return | Annualized volatility | Sharpe | Maximum drawdown |
+| --- | ---: | ---: | ---: | ---: |
+| Mean-variance optimized | 3.4% | 3.4% | 1.002 | -3.2% |
+| Signal-proportional reference | 13.0% | 11.4% | 1.122 | -5.1% |
+
+LASSO produced identical cross-sectional forecasts on 164 of 270 historical test dates. Under the required 100% net constraint, the covariance estimate drives allocation on those dates. This makes the result partly a minimum-variance experiment and weakens any claim that return forecasts explain the performance.
+
+![Validation risk-aversion selection](results/optimization/plots/validation_risk_aversion_selection.png)
+
 ## Reproduction
 
 Create an environment with Python 3.11 or later and install the dependencies:
@@ -89,6 +104,7 @@ python3 -m src.signal_analysis
 python3 -m src.macd_research
 python3 -m src.rolling_lasso
 python3 -m src.model_comparison
+python3 -m src.portfolio_optimization
 ```
 
 Derived tables and figures are written under `results/`.
@@ -103,4 +119,5 @@ Derived tables and figures are written under `results/`.
 | `src/macd_research.py` | SMA grid, smoothing comparison, and EWMA comparison |
 | `src/rolling_lasso.py` | Forward-safe feature processing and rolling LASSO evaluation |
 | `src/model_comparison.py` | Equal-weight, regression, and tree-model comparison |
+| `src/portfolio_optimization.py` | Validation-selected constrained mean-variance optimization |
 | `results/` | Compact research tables and figures |

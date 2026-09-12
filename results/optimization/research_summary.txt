@@ -1,0 +1,24 @@
+PORTFOLIO OPTIMIZATION RESULTS
+
+Method
+- Expected-return model: lasso, selected previously by validation MSE.
+- Risk estimate: trailing 60-day covariance with 10% diagonal shrinkage.
+- Constraints: 100% net exposure and no more than 300% gross exposure.
+- Risk aversion was selected by validation Sharpe before test evaluation.
+
+Selected risk-aversion score: 300
+Selected validation Sharpe: 0.773
+
+Historical out-of-sample results
+- Optimized ending value: 1.037
+- Optimized annualized return: 3.4%
+- Optimized Sharpe: 1.002
+- Optimized maximum drawdown: -3.2%
+- Baseline ending value: 1.139
+- Baseline Sharpe: 1.122
+
+Interpretation
+- LASSO forecasts were identical across ETFs on 164 of 270 historical test dates.
+- With a required 100% net exposure, those dates reduce to minimum-variance allocation.
+The historical test result is reported after the risk-aversion parameter was frozen.
+It is one historical out-of-sample period and does not establish future performance.
